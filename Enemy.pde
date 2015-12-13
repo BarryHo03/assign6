@@ -4,56 +4,65 @@ class Enemy{
 	int type;
 	int speed = 5;
 
-	PImage enemyImg;
-	Enemy(int x, int y, int type) {
-		this.x = x;
-		this.y = y;
-		this.type = type;
-		enemyImg = loadImage("img/enemy.png");
-		
-	}
-	void move() {
-		this.x+= 5;	
-	}
+  PImage enemyImg;
+  
+  Enemy(int x, int y, int type) {
+    this.x = x;
+    this.y = y;
+    this.type = type;
+    enemyImg = loadImage("img/enemy.png");
+    		
+  }
+  void move() {
+    this.x+= 5;	
+  }
+ 
+  void draw(){
+    image(enemyImg, x, y);
+  }
 
-	void draw()
-	{
-		image(enemyImg, x, y);
-	}
+  boolean isCollideWithFighter(int ax, int ay, int aw, int ah, int bx, int by, int bw, int bh){
+      // Collision x-axis?
+    boolean collisionX = (ax + aw >= bx) && (bx + bw >= ax);
+    // Collision y-axis?
+    boolean collisionY = (ay + ah >= by) && (by + bh >= ay);
+    if(collisionX && collisionY){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
-	boolean isCollideWithFighter()
-	{
-		return false;
-	}
-
-	boolean isOutOfBorder()
-	{
-		return false;
-	}
-
+  boolean isOutOfBorder(){
+    if(this.x>width){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
 }
 
-void addEnemy(int type)
-{	
-	for (int i = 0; i < enemyCount; ++i) {
-		enemys[i] = null;
-	}
-	switch (type) {
-		case EnemysShowingType.STRAIGHT:
-			addStraightEnemy();
-			break;
-		case EnemysShowingType.SLOPE:
-			addSlopeEnemy();
-			break;
-		case EnemysShowingType.DIAMOND:
-			addDiamondEnemy();
-			break;
-		case EnemysShowingType.STRONGLINE:
-			addEnemyStrong();
-			break;
-	}
-	time = millis();
+void addEnemy(int type){	
+  for (int i = 0; i < enemyCount; ++i) {
+    enemys[i] = null;
+    bosses[i] = null;
+  }
+  switch (type) {
+    case EnemysShowingType.STRAIGHT:
+      addStraightEnemy();
+      break;
+    case EnemysShowingType.SLOPE:
+      addSlopeEnemy();
+      break;
+    case EnemysShowingType.DIAMOND:
+      addDiamondEnemy();
+      break;
+    case EnemysShowingType.STRONGLINE:
+      addEnemyStrong();
+    break;
+  }
+  time = millis();
 }
 
 void addStraightEnemy()
@@ -97,9 +106,12 @@ void addDiamondEnemy()
 		}
 	}
 }
-void addEnemyStrong()
-{
-	for (int i = 0; i < 5; ++i) {
-		enemys[i] = new Enemy(0, 40+ i * 85, FlightType.ENEMYSTRONG);
-	}
+
+void addEnemyStrong(){
+  for (int i = 0; i < 5; ++i) {
+    bosses[i] = new Boss(0, 40+ i * 85, FlightType.ENEMYSTRONG);
+  }
 }
+
+
+
