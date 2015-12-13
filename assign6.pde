@@ -132,8 +132,14 @@ void draw(){
       }
     }    
   }else if (state == GameState.END) {
-    bg.draw();
-	}
+    for (int i = 0; i < enemyCount; ++i) {
+      enemys[i] = null;
+      bosses[i] = null;
+    }
+    bg.draw(); 
+    currentType=EnemysShowingType.STRAIGHT;
+   
+  }
 }
 
 boolean isHit(int ax, int ay, int aw, int ah, int bx, int by, int bw, int bh){
